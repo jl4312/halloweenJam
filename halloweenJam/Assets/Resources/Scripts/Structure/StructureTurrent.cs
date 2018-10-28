@@ -7,12 +7,14 @@ namespace MisfitMakers
     public class StructureTurrent : StructureBase
     {
 
-        private bool canAttack = false;
-		private float coolDown = 1f;
-
-
+        private bool canAttack;
+		public float coolDown = 1f;
+		
         private List<GameObject> enemyList;
 		private GameObject closestEnemy;
+
+		public GameObject projectilePool;
+		private Projectile[] projectileList;
 
         public StructureTurrent(float health, float buildTime, float cost) : base(health, buildTime, cost)
         {
@@ -22,7 +24,9 @@ namespace MisfitMakers
         void Start()
         {
 			enemyList = new List<GameObject>();
-        }
+			projectileList = projectilePool.GetComponentsInChildren<Projectile>(true);
+			canAttack = true;
+		}
 
         // Update is called once per frame
         void Update()
@@ -30,7 +34,7 @@ namespace MisfitMakers
             if (!isDead)
             {
 				UpdateEnemyList ();
-
+				Attack();
             }
         }
 
@@ -38,10 +42,11 @@ namespace MisfitMakers
         {
             if (isDead)
             {
+				return;
             }
-
-            if (other.tag == "Enemy")
+	        if (other.tag == "Enemy")
             {
+
                 enemyList.Add(other.gameObject);
 
             }
@@ -75,21 +80,43 @@ namespace MisfitMakers
 
 
 			}
+
+				
 		}
         public IEnumerator AttackCD(float time)
         {
             yield return new WaitForSeconds(time);
             canAttack = true;
+
         }
 
 		public void Attack()
 		{
+
 			if (closestEnemy && canAttack) {
+				Projectile currentProjectile = Reload();
+
+				if(currentProjectile){
+					currentProjectile.Reset(this.transform.GetChild(0).GetChild(0).position,
+				                        this.transform.GetChild(0).GetChild(0).rotation);
+					currentProjectile.SetNewTarget (closestEnemy);
+					currentProjectile.Launch();
+				}
 
 				canAttack = false;
-				AttackCD (coolDown);
+				StartCoroutine( AttackCD(coolDown));
 			}
 		}
 
+		Projectile Reload()
+		{
+		
+			for (int i = 0; i < projectileList.Length; i++) {
+
+				if(!projectileList[i].gameObject.activeInHierarchy)
+					return projectileList[i];
+			}
+			return null;
+		}
     }
 }

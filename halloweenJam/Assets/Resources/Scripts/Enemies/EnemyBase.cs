@@ -111,6 +111,7 @@ namespace MisfitMakers
             {
                 health = 0.0f;
                 isDead = true;
+
             }
         }
         public void Heal(float heal)

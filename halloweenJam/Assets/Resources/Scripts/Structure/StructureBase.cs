@@ -11,12 +11,13 @@ namespace MisfitMakers
         public float health;
         public float buildTime;
         public float cost;
+		[HideInInspector]
 
-        [Header("Structure Status Setting")]
+		[Header("Structure Status Setting")]
         public bool isDead;
         public bool building = true;
-
-        public StructureBase(float health, float buildTime, float cost)
+		[HideInInspector]
+		public StructureBase(float health, float buildTime, float cost)
         {
             this.health = health;
             this.buildTime = buildTime;
@@ -61,6 +62,7 @@ namespace MisfitMakers
                 building = false;
             }
         }
+
 
     }
 }
