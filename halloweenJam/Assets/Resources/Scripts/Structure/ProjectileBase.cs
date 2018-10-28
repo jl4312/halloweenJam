@@ -5,52 +5,43 @@ using UnityEngine;
 namespace MisfitMakers
 {
 //resouce: https://vilbeyli.github.io/Projectile-Motion-Tutorial-for-Arrows-and-Missiles-in-Unity3D/
-public class Projectile : MonoBehaviour {
+public class ProjectileBase : MonoBehaviour {
 
-	[SerializeField]private Transform targetTransform;
+	[SerializeField]protected Transform targetTransform;
 
 	[Header("Bullet Stats")]
-	public float bulletSpeed;
+	
 	public float damage;
-	public bool acceleration = true;
 	[HideInInspector]
 
-	private bool ready = false;
-	private bool grounded;
+	protected bool ready = false;
+	protected bool grounded;
 
-	private Rigidbody rigid;
+	protected Rigidbody rigid;
 
-	public GameObject startPos;
+	protected GameObject startPos;
 
-	private Vector3 initialPosition;
-	private Quaternion initialRotation;
+	protected Vector3 initialPosition;
+	protected Quaternion initialRotation;
 
 	public float despawnTime = 10f;
 	//Debug 
 	public bool debug;
+
 	[Range(1.0f, 6.0f)] public float distance;
 	[Range(00.0f, 90.0f)] public float angle;
-
+		
 	// Use this for initialization
 	void Awake () {
 		rigid = GetComponent<Rigidbody> ();
 		ready = true;
-		initialPosition = startPos.transform.position;
-		initialRotation = startPos.transform.rotation;
+		initialPosition = this.transform.position;
+		initialRotation = this.transform.rotation;
 		grounded = false;
 	}
 
-	void Update()
+	protected void Update()
 	{
-		//mid air
-		if (!ready && !grounded) {
-			
-			if(acceleration)
-				rigid.AddForce(transform.forward * bulletSpeed);
-			else
-				transform.position += transform.forward * bulletSpeed * Time.deltaTime;
-		}
-
 		if (debug) {
 			if (Input.GetKeyDown (KeyCode.Space)) {
 				if (ready)
@@ -60,42 +51,16 @@ public class Projectile : MonoBehaviour {
 					SetNewTarget ();
 				}
 			}
-			if (Input.GetKeyDown (KeyCode.R))
-				Reset ();
+		if (Input.GetKeyDown (KeyCode.R))
+			Reset ();
 		}
 	}
-	public void Launch(){
 
-		StartCoroutine (Despawner (despawnTime));
-		Vector3 dist = targetTransform.transform.position - this.transform.position;
-		dist.Normalize();
-		transform.forward = dist;
+	
+	
+	public virtual void Launch(){
 
 		
-		if (acceleration)
-			rigid.AddForce (transform.forward * bulletSpeed, ForceMode.Impulse);
-		ready = false;
-
-		/*
-		Vector3 projectileXZPos = new Vector3 (transform.position.x, 0, transform.position.z);
-		Vector3 targetXZPos = new Vector3 (targetTransform.position.x, 0, targetTransform.position.z);
-
-		transform.LookAt (targetTransform.position);
-
-
-		float R = Vector3.Distance (projectileXZPos, targetXZPos);
-		float G = Physics.gravity.y;
-		float tanAlpha = Mathf.Tan (angle * Mathf.Deg2Rad);
-		float H = targetTransform.position.y - transform.position.y;
-
-		float Vz = Mathf.Sqrt (G * R * R / (2.0f * (H - R * tanAlpha)));
-		float Vy = tanAlpha * Vz;
-
-		Vector3 localVelocity = new Vector3 (0f, Vy, Vz);
-		Vector3 globalVelocity = transform.TransformDirection (localVelocity);
-
-		rigid.velocity = globalVelocity;*/
-
 
 	}
 
@@ -143,9 +108,7 @@ public class Projectile : MonoBehaviour {
 		ready = false;
 	
 	}
-
-
-
+		
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Ground" || other.tag == "Enemy") {
 		
@@ -161,7 +124,7 @@ public class Projectile : MonoBehaviour {
 		grounded = false;
 	}
 
-	IEnumerator Despawner(float time)
+	public IEnumerator Despawner(float time)
 	{
 		yield return new WaitForSeconds(time);
 		rigid.velocity = Vector3.zero;

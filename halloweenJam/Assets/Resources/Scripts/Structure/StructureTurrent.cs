@@ -14,17 +14,17 @@ namespace MisfitMakers
 		private GameObject closestEnemy;
 
 		public GameObject projectilePool;
-		private Projectile[] projectileList;
+		private ProjectileBase[] projectileList;
 
         public StructureTurrent(float health, float buildTime, float cost) : base(health, buildTime, cost)
-        {
-            
+        {  
         }
+
         // Use this for initialization
         void Start()
         {
 			enemyList = new List<GameObject>();
-			projectileList = projectilePool.GetComponentsInChildren<Projectile>(true);
+			projectileList = projectilePool.GetComponentsInChildren<ProjectileBase>(true);
 			canAttack = true;
 		}
 
@@ -44,11 +44,8 @@ namespace MisfitMakers
             {
 				return;
             }
-	        if (other.tag == "Enemy")
-            {
-
+	        if (other.tag == "Enemy"){
                 enemyList.Add(other.gameObject);
-
             }
         }
 
@@ -94,11 +91,12 @@ namespace MisfitMakers
 		{
 
 			if (closestEnemy && canAttack) {
-				Projectile currentProjectile = Reload();
+				ProjectileBase currentProjectile = Reload();
 
 				if(currentProjectile){
 					currentProjectile.Reset(this.transform.GetChild(0).GetChild(0).position,
 				                        this.transform.GetChild(0).GetChild(0).rotation);
+
 					currentProjectile.SetNewTarget (closestEnemy);
 					currentProjectile.Launch();
 				}
@@ -108,9 +106,9 @@ namespace MisfitMakers
 			}
 		}
 
-		Projectile Reload()
+		ProjectileBase Reload()
 		{
-		
+			Debug.Log (projectileList.Length);
 			for (int i = 0; i < projectileList.Length; i++) {
 
 				if(!projectileList[i].gameObject.activeInHierarchy)
