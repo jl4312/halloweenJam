@@ -99,6 +99,8 @@ namespace MisfitMakers
         }
         void PlaceStructure()
         {
+            structureToPlace.isActive = true;
+            structureToPlace.ResetStructure();
             structureToPlace.Build();
 
             structureToPlace = null;
@@ -111,6 +113,7 @@ namespace MisfitMakers
                 {
                     torrentPool.transform.GetChild(i).gameObject.SetActive(true);
                     structureToPlace = torrentPool.transform.GetChild(i).GetComponent<StructureBase>();
+                    structureToPlace.isActive = false;
                     return;
                 }
             }

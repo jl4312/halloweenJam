@@ -17,7 +17,8 @@ namespace MisfitMakers
 		private ProjectileBase[] projectileList;
 
         public StructureTurrent(float health, float buildTime, float cost) : base(health, buildTime, cost)
-        {  
+        {
+            
         }
 
         // Use this for initialization

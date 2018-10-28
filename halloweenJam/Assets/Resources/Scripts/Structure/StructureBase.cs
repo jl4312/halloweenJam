@@ -16,20 +16,20 @@ namespace MisfitMakers
 		[Header("Structure Status Setting")]
         public bool isDead;
         public bool building = true;
-		public bool isActive;
+        [HideInInspector]
+        public bool isActive;
 
 		public List<GameObject> arrayList;
-		[HideInInspector]
+        [HideInInspector]
 
+        float startHealth;
 
 		public StructureBase(float health, float buildTime, float cost)
-        {
+        {          
             this.health = health;
             this.buildTime = buildTime;
             this.cost = cost;
-            isDead = false;
-            building = true;
-			isActive = true;
+
         }
 
         // Update is called once per frame
@@ -44,6 +44,13 @@ namespace MisfitMakers
                 Build();
 
         }
+        void Awake()
+        {
+            startHealth = health;
+            isDead = false;
+            building = true;
+            isActive = true;
+        }
 
         public void TakeDamage(float damage)
         {
@@ -57,7 +64,11 @@ namespace MisfitMakers
                 this.gameObject.SetActive(false);
             }
         }
-
+        public void ResetStructure()
+        {
+            isDead = false;
+            health = startHealth;
+        }
         public void Build()
         {
             buildTime -= Time.deltaTime;

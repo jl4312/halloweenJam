@@ -72,7 +72,7 @@ namespace MisfitMakers
             for (int i = 0; i < numOfStructures; i++)
             {
                 GameObject structure = structuresPool[i];
-                if (!structure.activeInHierarchy)
+                if (!structure.activeInHierarchy || !structure.GetComponent<StructureBase>().isActive)
                 {
                     continue;
                 }

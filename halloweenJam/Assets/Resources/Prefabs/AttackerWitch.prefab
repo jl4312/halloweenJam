@@ -1048,7 +1048,7 @@ MonoBehaviour:
   health: 3
   maxHealth: 3
   movementSpeed: 2
-  damage: 1
+  damage: 5
   atkSpeed: 1
   isDead: 0
   hasReachedTarget: 0

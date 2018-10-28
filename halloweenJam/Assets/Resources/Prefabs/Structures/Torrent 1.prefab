@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 65714958963740124}
   - component: {fileID: 114896689099031002}
   m_Layer: 0
-  m_Name: Torrent
+  m_Name: Torrent 1
   m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,6 +318,7 @@ MonoBehaviour:
   cost: 1
   isDead: 0
   building: 0
+  isActive: 0
   arrayList: []
   coolDown: 3
   projectilePool: {fileID: 0}
