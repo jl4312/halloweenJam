@@ -16,7 +16,11 @@ namespace MisfitMakers
 		[Header("Structure Status Setting")]
         public bool isDead;
         public bool building = true;
+
+		public List<GameObject> arrayList;
 		[HideInInspector]
+
+
 		public StructureBase(float health, float buildTime, float cost)
         {
             this.health = health;

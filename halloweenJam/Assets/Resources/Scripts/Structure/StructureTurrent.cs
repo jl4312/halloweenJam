@@ -10,7 +10,7 @@ namespace MisfitMakers
         private bool canAttack;
 		public float coolDown = 1f;
 		
-        private List<GameObject> enemyList;
+      
 		private GameObject closestEnemy;
 
 		public GameObject projectilePool;
@@ -23,7 +23,7 @@ namespace MisfitMakers
         // Use this for initialization
         void Start()
         {
-			enemyList = new List<GameObject>();
+	
 			projectileList = projectilePool.GetComponentsInChildren<ProjectileBase>(true);
 			canAttack = true;
 		}
@@ -38,23 +38,15 @@ namespace MisfitMakers
             }
         }
 
-        void OnTriggerEnter(Collider other)
-        {
-            if (isDead)
-            {
-				return;
-            }
-	        if (other.tag == "Enemy"){
-                enemyList.Add(other.gameObject);
-            }
-        }
+        
 
 		void OnTriggerExit(Collider other)
 		{
-			if (other.tag == "Enemy") {
-				enemyList.Remove(other.gameObject);
+			if (arrayList.Contains(other.gameObject)) {
+				arrayList.Remove(other.gameObject);
 			}
 		}
+
 		void UpdateEnemyList()
 		{
 			float closetEnemyDist;
@@ -62,18 +54,18 @@ namespace MisfitMakers
 
 			closetEnemyDist = 100000f; 
 
-			for (int i = 0; i < enemyList.Count; i++) {
+			for (int i = 0; i < arrayList.Count; i++) {
 
-				dist = enemyList[i].transform.position - this.transform.position;
+				dist = arrayList[i].transform.position - this.transform.position;
 
 				if(dist.magnitude < closetEnemyDist)
 				{
 					closetEnemyDist = dist.magnitude;
-					closestEnemy = enemyList[i];
+					closestEnemy = arrayList[i];
 				}
 
-				if(enemyList[i].GetComponent<EnemyBase>().isDead)
-					enemyList.RemoveAt (i);
+				if(arrayList[i].GetComponent<EnemyBase>().isDead)
+					arrayList.RemoveAt (i);
 
 
 			}
@@ -108,7 +100,7 @@ namespace MisfitMakers
 
 		ProjectileBase Reload()
 		{
-			Debug.Log (projectileList.Length);
+		
 			for (int i = 0; i < projectileList.Length; i++) {
 
 				if(!projectileList[i].gameObject.activeInHierarchy)
