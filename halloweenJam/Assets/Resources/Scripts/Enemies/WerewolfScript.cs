@@ -50,7 +50,7 @@ namespace MisfitMakers
             }
         }
 
-        IEnumerator AttackCD(float time)
+        public override IEnumerator AttackCD(float time)
         {
             yield return new WaitForSeconds(time);
             furyAttackHitCounts = 0;

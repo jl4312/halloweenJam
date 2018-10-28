@@ -9,6 +9,7 @@ namespace MisfitMakers
 
         [Header("Enemy Base Setting")]
         public float health = 1.0f;
+        public float maxHealth = 1.0f;
         public float movementSpeed = 1.0f;
         public float damage = 1.0f;
         public float atkSpeed = 2.0f;
@@ -22,6 +23,8 @@ namespace MisfitMakers
 
         protected GameObject structuresPool = null;
         protected StructureBase closestTarget = null;
+
+        float groundLevel = -1;
 
         // Use this for initialization
         void Start()
@@ -88,7 +91,11 @@ namespace MisfitMakers
 
         public void SeekStructure()
         {
-            Vector3 dist2Structure = closestTarget.transform.position - transform.position;
+            if (groundLevel == -1)
+            {
+                groundLevel = transform.position.y;
+            }
+            Vector3 dist2Structure = new Vector3(closestTarget.transform.position.x, groundLevel, closestTarget.transform.position.z) - transform.position;
             dist2Structure.Normalize();
 
             transform.forward = dist2Structure;
@@ -106,7 +113,15 @@ namespace MisfitMakers
                 isDead = true;
             }
         }
-        public void AttackTarget()
+        public void Heal(float heal)
+        {
+            health += heal;
+            if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
+        }
+        public virtual void AttackTarget()
         {
             if (!newTarget)
             {
@@ -122,7 +137,7 @@ namespace MisfitMakers
                 StartCoroutine(AttackCD(atkSpeed));
             }
         }
-        IEnumerator AttackCD(float time)
+        public virtual IEnumerator AttackCD(float time)
         {
             yield return new WaitForSeconds(time);
             AttackTarget();

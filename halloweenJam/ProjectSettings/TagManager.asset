@@ -8,6 +8,7 @@ TagManager:
   - SpawnPoints
   - StructurePool
   - Structure
+  - SpellBulletPool
   layers:
   - Default
   - TransparentFX
