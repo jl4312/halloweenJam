@@ -21,7 +21,7 @@ namespace MisfitMakers
         protected bool canAttack = true;
         protected bool newTarget = true;
 
-        protected GameObject structuresPool = null;
+        protected GameObject[] structuresPool = null;
         protected StructureBase closestTarget = null;
 
         float groundLevel = -1;
@@ -63,15 +63,15 @@ namespace MisfitMakers
         {
             if (structuresPool == null)
             {
-                structuresPool = GameObject.FindGameObjectWithTag("StructurePool");
+                structuresPool = GameObject.FindGameObjectsWithTag("Structure");
             }
-            int numOfStructures = structuresPool.transform.childCount;
-
+            int numOfStructures = structuresPool.Length;
+            //Debug.Log(numOfStructures);
             float closestDist = 999999;
 
             for (int i = 0; i < numOfStructures; i++)
             {
-                GameObject structure = structuresPool.transform.GetChild(i).gameObject;
+                GameObject structure = structuresPool[i];
                 if (!structure.activeInHierarchy)
                 {
                     continue;
@@ -111,7 +111,7 @@ namespace MisfitMakers
             {
                 health = 0.0f;
                 isDead = true;
-
+                this.gameObject.SetActive(false);
             }
         }
         public void Heal(float heal)

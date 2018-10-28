@@ -9,6 +9,7 @@ TagManager:
   - StructurePool
   - Structure
   - SpellBulletPool
+  - Ground
   layers:
   - Default
   - TransparentFX
