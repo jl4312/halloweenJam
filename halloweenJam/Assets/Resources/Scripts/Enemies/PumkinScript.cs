@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PumkinScript : EnemyBase {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+namespace MisfitMakers
+{
+    public class PumkinScript : EnemyBase
     {
 
-        UpdateEnemy();
-	}
-    public override void Attack()
-    {
+        // Use this for initialization
+        void Start()
+        {
 
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+            UpdateEnemy();
+        }
+        public override void Attack()
+        {
+
+        }
     }
 }
