@@ -15,7 +15,10 @@ namespace MisfitMakers
 		void OnTriggerEnter(Collider other)
 		{
 			if (other.tag == "Enemy") {
-				parent.arrayList.Add(other.gameObject);
+                if (!parent.arrayList.Contains(other.gameObject))
+                {
+                    parent.arrayList.Add(other.gameObject);
+                }				
 			}
 		}
 	}

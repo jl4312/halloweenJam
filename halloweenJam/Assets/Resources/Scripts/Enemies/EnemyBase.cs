@@ -16,13 +16,15 @@ namespace MisfitMakers
 
         [HideInInspector]
         public bool isDead = false;
-
-        protected bool hasReachedTarget = false;
+        [HideInInspector]
+        public bool hasReachedTarget = false;
+        [HideInInspector]
+        public bool newTarget = true;
         protected bool canAttack = true;
-        protected bool newTarget = true;
 
         protected GameObject[] structuresPool = null;
-        protected StructureBase closestTarget = null;
+        [HideInInspector]
+        public StructureBase closestTarget = null;
 
         float groundLevel = -1;
 

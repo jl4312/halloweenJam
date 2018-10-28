@@ -186,6 +186,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4217980255260110}
+  - component: {fileID: 54345620507799976}
+  - component: {fileID: 135390797829933514}
+  - component: {fileID: 114979912033365748}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -202,11 +205,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4786993287527210}
   - component: {fileID: 54174551685995474}
-  - component: {fileID: 135483474641527222}
+  - component: {fileID: 65465544419690540}
   - component: {fileID: 114894953120256332}
   m_Layer: 0
   m_Name: Witch
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -470,7 +473,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1428306363510456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.055664062, y: 0.037112474, z: -7.16}
+  m_LocalPosition: {x: -0.055664062, y: 0.037112474, z: 3.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4217980255260110}
@@ -980,6 +983,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!54 &54345620507799976
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421070537809092}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &65465544419690540
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428306363510456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.33, y: 2.33, z: 0.76}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!65 &65526907942957410
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1021,17 +1051,31 @@ MonoBehaviour:
   damage: 1
   atkSpeed: 0.5
   isDead: 0
+  hasReachedTarget: 0
+  newTarget: 1
+  closestTarget: {fileID: 0}
   witchType: 0
   hat: {fileID: 1129459508417118}
   spellSpawnPoint: {fileID: 1157738377504580}
   spellCastTime: 4
   spellBulletSpeed: 7
---- !u!135 &135483474641527222
+--- !u!114 &114979912033365748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421070537809092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b729a06194be9a545be1c3b13bcb7bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &135390797829933514
 SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1428306363510456}
+  m_GameObject: {fileID: 1421070537809092}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1

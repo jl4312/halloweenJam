@@ -8,6 +8,7 @@ namespace MisfitMakers
     {
         EnemyBase spellOwner;
         GameObject target;
+        Vector3 dist2Structure;
         Vector3 startingPos;
         float speed;
 
@@ -21,8 +22,16 @@ namespace MisfitMakers
 
         // Update is called once per frame
         void Update()
-        {
-            SeekTarget();
+        {            
+            if (target.activeInHierarchy)
+            {
+                SeekTarget();
+            }
+            else
+            {
+                dist2Structure = target.transform.position - spellOwner.transform.position;
+                transform.position += (dist2Structure * speed) * Time.deltaTime;
+            }
         }
 
         public void ActivateBullet(GameObject owner, GameObject tar, Vector3 starting, float spd)
@@ -39,7 +48,7 @@ namespace MisfitMakers
 
         void SeekTarget()
         {
-            Vector3 dist2Structure = target.transform.position - transform.position;
+            dist2Structure = target.transform.position - transform.position;
             dist2Structure.Normalize();
 
             transform.forward = dist2Structure;
