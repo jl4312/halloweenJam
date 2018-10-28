@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour {
+public class PumkinScript : EnemyBase {
 
 	// Use this for initialization
 	void Start () {
@@ -10,7 +10,13 @@ public class EnemyBase : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
+
+        UpdateEnemy();
 	}
+    public override void Attack()
+    {
+
+    }
 }
