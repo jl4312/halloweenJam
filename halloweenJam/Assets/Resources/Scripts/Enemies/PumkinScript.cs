@@ -18,9 +18,5 @@ namespace MisfitMakers
         {
             UpdateEnemy();
         }
-        public override void Attack()
-        {
-
-        }
     }
 }

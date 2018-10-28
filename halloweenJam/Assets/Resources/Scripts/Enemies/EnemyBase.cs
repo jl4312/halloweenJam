@@ -35,9 +35,10 @@ namespace MisfitMakers
         {
            
 
-            if (closestTarget == null)
+            if (closestTarget == null || !closestTarget.gameObject.activeInHierarchy)
             {
                 //Debug.Log("Yererrre");
+                hasReachedTarget = false;
                 FindNearestTower();
             }
             else
@@ -66,7 +67,10 @@ namespace MisfitMakers
             for (int i = 0; i < numOfStructures; i++)
             {
                 GameObject structure = structuresPool.transform.GetChild(i).gameObject;
-
+                if (!structure.activeInHierarchy)
+                {
+                    continue;
+                }
                 Vector3 dist2Structure = structure.transform.position - transform.position;
                 float magSquared = dist2Structure.sqrMagnitude;
 
@@ -111,6 +115,7 @@ namespace MisfitMakers
         public IEnumerator AttackCD(float time)
         {
             yield return new WaitForSeconds(time);
+            closestTarget.TakeDamage(damage);
             canAttack = true;
         }
         private void OnTriggerEnter(Collider other)
