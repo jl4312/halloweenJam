@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 65465544419690540}
   - component: {fileID: 114894953120256332}
   m_Layer: 0
-  m_Name: Witch
+  m_Name: EnhancerWitch
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1049,15 +1049,15 @@ MonoBehaviour:
   maxHealth: 3
   movementSpeed: 2
   damage: 1
-  atkSpeed: 0.5
+  atkSpeed: 1
   isDead: 0
   hasReachedTarget: 0
   newTarget: 1
   closestTarget: {fileID: 0}
-  witchType: 0
+  witchType: 2
   hat: {fileID: 1129459508417118}
   spellSpawnPoint: {fileID: 1157738377504580}
-  spellCastTime: 4
+  spellCastTime: 3
   spellBulletSpeed: 7
 --- !u!114 &114979912033365748
 MonoBehaviour:

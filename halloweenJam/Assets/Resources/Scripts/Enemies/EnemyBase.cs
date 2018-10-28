@@ -52,6 +52,7 @@ namespace MisfitMakers
             {
                 if (!hasReachedTarget)
                 {
+                    FindNearestTower();
                     SeekStructure();
                 }
                 else
