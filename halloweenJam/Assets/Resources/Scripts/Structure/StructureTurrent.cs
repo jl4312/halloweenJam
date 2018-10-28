@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class StructureTurrent : StructureBase {
 
-
+	private bool canAttack = false;
 	private List<GameObject> enemyList;
-
+	
 	private GameObject closestEnemy;
 
 	public StructureTurrent(float health, float buildTime, float cost) : base(health, buildTime, cost)
@@ -21,20 +21,26 @@ public class StructureTurrent : StructureBase {
 	
 	// Update is called once per frame
 	void Update () {
-		if (alive) {
+		if (!isDead) {
 			
 		}
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (!alive) {
+		if (isDead) {
 		}
 
 		if (other.tag == "Enemy") {
 			enemyList.Add(other.gameObject);
 
 		}
+	}
+
+	public IEnumerator AttackCD(float time)
+	{
+		yield return new WaitForSeconds(time);
+		canAttack = true;
 	}
 
 

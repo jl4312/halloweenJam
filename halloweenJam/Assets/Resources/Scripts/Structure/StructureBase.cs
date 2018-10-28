@@ -8,21 +8,23 @@ public class StructureBase : MonoBehaviour {
 	public float health;
 	public float buildTime;
 	public float cost;
-	public bool alive;
+
+	[Header("Structure Status Setting")]
+	public bool isDead;
 	public bool building = true;
 
 	public StructureBase(float health, float buildTime, float cost){
 		this.health = health;
 		this.buildTime = buildTime;
 		this.cost = cost;
-		alive = true;
+		isDead = false;
 		building = true;
 
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (alive) {
+		if (!isDead) {
 			
 		}
 
@@ -33,9 +35,12 @@ public class StructureBase : MonoBehaviour {
 
 	public void TakeDamage(float damage)
 	{
+		if (isDead)
+			return;
+
 		health -= damage;
 		if (health <= 0) {
-			alive = false;
+			isDead = true;
 			this.gameObject.SetActive(false);
 		}
 	}
