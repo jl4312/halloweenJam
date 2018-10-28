@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - SpawnPoints
+  - StructurePool
+  - Structure
   layers:
   - Default
   - TransparentFX

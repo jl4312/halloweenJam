@@ -19,24 +19,32 @@ namespace MisfitMakers
         protected bool hasReachedTarget = false;
         protected bool canAttack = true;
 
-        protected GameObject closestTarget;
+        protected GameObject structuresPool = null;
+        protected StructureBase closestTarget = null;
 
         // Use this for initialization
         void Start()
         {
 
         }
+        void Update()
+        {
+
+        }
         public void UpdateEnemy()
         {
+           
+
             if (closestTarget == null)
             {
+                //Debug.Log("Yererrre");
                 FindNearestTower();
             }
             else
             {
                 if (!hasReachedTarget)
                 {
-                    SeekTower();
+                    SeekStructure();
                 }
                 else
                 {
@@ -47,12 +55,37 @@ namespace MisfitMakers
         }
         public void FindNearestTower()
         {
+            if (structuresPool == null)
+            {
+                structuresPool = GameObject.FindGameObjectWithTag("StructurePool");
+            }
+            int numOfStructures = structuresPool.transform.childCount;
+
+            float closestDist = 999999;
+
+            for (int i = 0; i < numOfStructures; i++)
+            {
+                GameObject structure = structuresPool.transform.GetChild(i).gameObject;
+
+                Vector3 dist2Structure = structure.transform.position - transform.position;
+                float magSquared = dist2Structure.sqrMagnitude;
+
+                if (magSquared < closestDist || i == 0)
+                {
+                    closestDist = magSquared;
+                    //closestTarget = structure;
+                    closestTarget = structure.GetComponent<StructureBase>();
+                }
+            }
 
         }
 
-        public void SeekTower()
+        public void SeekStructure()
         {
+            Vector3 dist2Structure = closestTarget.transform.position - transform.position;
+            dist2Structure.Normalize();
 
+            transform.position += (dist2Structure * movementSpeed) * Time.deltaTime;
         }
         public virtual void Attack()
         {
@@ -80,6 +113,13 @@ namespace MisfitMakers
             yield return new WaitForSeconds(time);
             canAttack = true;
         }
-
+        private void OnTriggerEnter(Collider other)
+        {
+            StructureBase structure = other.GetComponent<StructureBase>();
+            if (structure != null && structure == closestTarget)
+            {
+                hasReachedTarget = true;
+            }
+        }
     }
 }

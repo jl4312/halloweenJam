@@ -16,7 +16,6 @@ namespace MisfitMakers
         // Update is called once per frame
         void Update()
         {
-
             UpdateEnemy();
         }
         public override void Attack()
