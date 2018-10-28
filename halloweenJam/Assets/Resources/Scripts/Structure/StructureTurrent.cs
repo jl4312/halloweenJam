@@ -15,7 +15,6 @@ namespace MisfitMakers
         public StructureTurrent(float health, float buildTime, float cost) : base(health, buildTime, cost)
         {
             enemyList = new List<GameObject>();
-
         }
         // Use this for initialization
         void Start()
