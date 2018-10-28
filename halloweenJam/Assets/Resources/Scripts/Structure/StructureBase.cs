@@ -16,6 +16,7 @@ namespace MisfitMakers
 		[Header("Structure Status Setting")]
         public bool isDead;
         public bool building = true;
+		public bool isActive;
 
 		public List<GameObject> arrayList;
 		[HideInInspector]
@@ -28,7 +29,7 @@ namespace MisfitMakers
             this.cost = cost;
             isDead = false;
             building = true;
-
+			isActive = true;
         }
 
         // Update is called once per frame

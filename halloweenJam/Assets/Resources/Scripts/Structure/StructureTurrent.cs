@@ -33,7 +33,12 @@ namespace MisfitMakers
         {
             if (!isDead)
             {
+	
 				UpdateEnemyList ();
+	
+				if(arrayList.Count == 0)
+					return;
+
 				Attack();
             }
         }
