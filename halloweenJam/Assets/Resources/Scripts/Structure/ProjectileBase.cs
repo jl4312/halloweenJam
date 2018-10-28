@@ -24,7 +24,7 @@ public class ProjectileBase : MonoBehaviour {
 	protected Vector3 initialPosition;
 	protected Quaternion initialRotation;
 
-	public float despawnTime = 10f;
+	public float despawnTime = 5f;
 	//Debug 
 	public bool debug;
 

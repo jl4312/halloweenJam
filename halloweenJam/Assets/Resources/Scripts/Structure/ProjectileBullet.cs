@@ -9,7 +9,7 @@ namespace MisfitMakers
 			
 		[Header("Bullet Stats")]
 		public float bulletSpeed;
-		public bool acceleration = true;
+		public bool acceleration = false;
 		[HideInInspector]
 
 		
@@ -17,17 +17,20 @@ namespace MisfitMakers
 		{
 			//mid air
 			if (!ready && !grounded) {
-				
+
 				if(acceleration)
 					rigid.AddForce(transform.forward * bulletSpeed);
 				else
 					transform.position += transform.forward * bulletSpeed * Time.deltaTime;
+
+
 			}
 
-				base.Update ();
+				//base.Update ();
 		}
 
 		public override void Launch(){
+
 
 			StartCoroutine (Despawner (despawnTime));
 			Vector3 dist = targetTransform.transform.position - this.transform.position;
