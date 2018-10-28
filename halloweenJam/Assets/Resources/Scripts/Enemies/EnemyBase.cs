@@ -18,6 +18,7 @@ namespace MisfitMakers
 
         protected bool hasReachedTarget = false;
         protected bool canAttack = true;
+        protected bool newTarget = true;
 
         protected GameObject structuresPool = null;
         protected StructureBase closestTarget = null;
@@ -39,6 +40,7 @@ namespace MisfitMakers
             {
                 //Debug.Log("Yererrre");
                 hasReachedTarget = false;
+                newTarget = true;
                 FindNearestTower();
             }
             else
@@ -89,17 +91,9 @@ namespace MisfitMakers
             Vector3 dist2Structure = closestTarget.transform.position - transform.position;
             dist2Structure.Normalize();
 
+            transform.forward = dist2Structure;
             transform.position += (dist2Structure * movementSpeed) * Time.deltaTime;
         }
-        public virtual void Attack()
-        {
-            if (canAttack)
-            {
-                canAttack = false;
-                StartCoroutine(AttackCD(atkSpeed));
-            }
-        }
-
         public void TakeDamage(float dam)
         {
             if (isDead) return;
@@ -112,10 +106,26 @@ namespace MisfitMakers
                 isDead = true;
             }
         }
-        public IEnumerator AttackCD(float time)
+        public void AttackTarget()
+        {
+            if (!newTarget)
+            {
+                closestTarget.TakeDamage(damage);
+            }
+        }
+
+        public virtual void Attack()
+        {
+            if (canAttack)
+            {
+                canAttack = false;
+                StartCoroutine(AttackCD(atkSpeed));
+            }
+        }
+        IEnumerator AttackCD(float time)
         {
             yield return new WaitForSeconds(time);
-            closestTarget.TakeDamage(damage);
+            AttackTarget();
             canAttack = true;
         }
         private void OnTriggerEnter(Collider other)
@@ -124,6 +134,7 @@ namespace MisfitMakers
             if (structure != null && structure == closestTarget)
             {
                 hasReachedTarget = true;
+                newTarget = false;
             }
         }
     }

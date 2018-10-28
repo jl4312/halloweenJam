@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7c316b1671d8349898572b2bfc6649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 10
   buildTime: 1
   cost: 1
   isDead: 0
