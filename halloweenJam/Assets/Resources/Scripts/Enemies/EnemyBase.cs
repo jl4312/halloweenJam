@@ -61,10 +61,7 @@ namespace MisfitMakers
         }
         public void FindNearestTower()
         {
-            if (structuresPool == null)
-            {
-                structuresPool = GameObject.FindGameObjectsWithTag("Structure");
-            }
+            structuresPool = GameObject.FindGameObjectsWithTag("Structure");
             int numOfStructures = structuresPool.Length;
             //Debug.Log(numOfStructures);
             float closestDist = 999999;
