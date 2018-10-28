@@ -65,10 +65,19 @@ namespace MisfitMakers
 
                 for (int i = 0; i < hit.Length; i++)
                 {
+                    if (hit[i].transform.gameObject == structureToPlace.gameObject)
+                    {
+                        continue;
+                    }
+
                     if (hit[i].transform.CompareTag("Ground"))
                     {
                         pointOnGround = hit[i].point;
-                        hitGround = true;
+                        hitGround = true;                       
+                    }
+                    else if(hit[i].transform.CompareTag("Structure"))
+                    {
+                        hitGround = false;
                         continue;
                     }
                 }
@@ -81,7 +90,7 @@ namespace MisfitMakers
                     structureToPlace.transform.position = new Vector3(10000,0,0);
                 }
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && hitGround)
                 {
                     PlaceStructure();
                 }
