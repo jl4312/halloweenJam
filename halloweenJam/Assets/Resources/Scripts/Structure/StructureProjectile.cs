@@ -15,6 +15,8 @@ public class StructureProjectile : MonoBehaviour {
 
 
 	[Header("Trajectory Debug")]
+	LineRenderer lr;
+
 
 	public StructureProjectile(Vector3 pos, Vector3 target, Vector3 orientation){
 
@@ -28,7 +30,7 @@ public class StructureProjectile : MonoBehaviour {
 		for (int i = 0; i < numProjectilePoints; i++) {
 			GameObject dot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-			trajectoryPoints.Add(dots);
+
 		}
 	}
 	
