@@ -123,9 +123,9 @@ namespace MisfitMakers
                     }
                 }
 	
-                if (hitGround)
+                if (hitGround && hasHitATile)
                 {
-                    structureToPlace.transform.position = pointOnGround;
+                    structureToPlace.transform.position = tile.transform.position;
                 }
                 else
                 {
