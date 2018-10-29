@@ -10,6 +10,7 @@ public class PoolManager : MonoBehaviour {
 	private List<GameObject> listOfChild;
 	public bool randomSpawn;
 	public float spawnRadius = 0;
+	public bool active = true;
 	// Use this for initialization
 	void Awake () {
 		GameObject instance;
@@ -18,6 +19,8 @@ public class PoolManager : MonoBehaviour {
 		for (int i = 0; i < numObj; i++) {
 
 			listOfChild.Add((GameObject)Instantiate(gameObject, transform));
+			listOfChild[listOfChild.Count -1].SetActive(active);
+
 			if(randomSpawn)
 				listOfChild[listOfChild.Count - 1].transform.position += new Vector3(Random.Range(-spawnRadius, spawnRadius), 0,Random.Range(-spawnRadius, spawnRadius));
 		}

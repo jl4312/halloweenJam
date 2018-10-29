@@ -69,6 +69,7 @@ namespace MisfitMakers
             isDead = false;
             health = startHealth;
         }
+
         public void Build()
         {
             buildTime -= Time.deltaTime;

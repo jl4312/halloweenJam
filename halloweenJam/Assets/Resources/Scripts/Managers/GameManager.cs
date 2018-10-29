@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace MisfitMakers
 {
@@ -15,9 +16,10 @@ namespace MisfitMakers
         public GameObject mainCam;
 
         [Header("Structure Pools")]
-        public GameObject torrentPool;
+        public GameObject torrentBulletPool;
+		public GameObject torrentArcPool;
 
-        Camera cam;
+		Camera cam;
         StructureBase structureToPlace;
         GameObject enemySpawnPoints;
         GameObject ground;
@@ -26,6 +28,13 @@ namespace MisfitMakers
         Vector3 pointOnGround;
         float distToGroundMag;
         int numOfSpawns;
+
+
+		//currency information
+		[Header("Currency")]
+		public TextMeshProUGUI moneyText;
+		float currentMoney = 500;
+
 
         // Use this for initialization
         void Start()
@@ -37,6 +46,8 @@ namespace MisfitMakers
             distToGround = ground.transform.position - mainCam.transform.position;
             distToGroundMag = distToGround.magnitude;
             numOfSpawns = enemySpawnPoints.transform.childCount;
+
+			moneyText.text = "" + currentMoney;
         }
         void OnGUI()
         {
@@ -81,6 +92,7 @@ namespace MisfitMakers
                         continue;
                     }
                 }
+	
                 if (hitGround)
                 {
                     structureToPlace.transform.position = pointOnGround;
@@ -92,6 +104,7 @@ namespace MisfitMakers
 
                 if (Input.GetMouseButtonDown(0) && hitGround)
                 {
+
                     PlaceStructure();
                 }
             }
@@ -100,19 +113,28 @@ namespace MisfitMakers
         void PlaceStructure()
         {
             structureToPlace.isActive = true;
-            structureToPlace.ResetStructure();
-            structureToPlace.Build();
 
-            structureToPlace = null;
+			if (currentMoney >= structureToPlace.cost) {
+				currentMoney -= structureToPlace.cost;
+				moneyText.text = "" +  currentMoney;
+
+				structureToPlace.ResetStructure();
+				structureToPlace.Build();
+				
+				structureToPlace = null;
+			}
+			else
+				Debug.Log ("Not Enough Money" + currentMoney + "/" + structureToPlace.cost);
         }
-        public void LoadTorrentStructure()
+
+        public void LoadTorrentProjectileStructure(GameObject pool)
         {
-            for (int i = 0; i < torrentPool.transform.childCount; i++)
+            for (int i = 0; i < pool.transform.childCount; i++)
             {
-                if (!torrentPool.transform.GetChild(i).gameObject.activeInHierarchy)
+				if (!pool.transform.GetChild(i).gameObject.activeInHierarchy)
                 {
-                    torrentPool.transform.GetChild(i).gameObject.SetActive(true);
-                    structureToPlace = torrentPool.transform.GetChild(i).GetComponent<StructureBase>();
+					pool.transform.GetChild(i).gameObject.SetActive(true);
+					structureToPlace = pool.transform.GetChild(i).GetComponent<StructureBase>();
                     structureToPlace.isActive = false;
                     return;
                 }
@@ -121,6 +143,7 @@ namespace MisfitMakers
             Debug.Log("Got no structure");
             structureToPlace = null;
         }
+
 
         public void SpawnEnemy(GameObject ene)
         {
