@@ -10,7 +10,7 @@ namespace MisfitMakers
 
         [Header("Structure Base Setting")]
         public float health;
-        public float buildTime;
+        public float currentBuildTime;
         public float cost;
 		[HideInInspector]
 
@@ -23,53 +23,54 @@ namespace MisfitMakers
 		public List<GameObject> arrayList;
         [HideInInspector]
 
-        float startHealth;
+        float startHealth;//total health
+		float buildTime;//total buildTime
+       
+		public AnimationClip animClip;
 
-		public StructureBase(float health, float buildTime, float cost)
-        {          
-            this.health = health;
-            this.buildTime = buildTime;
-            this.cost = cost;
-
-        }
-
-        // Update is called once per frame
-        void Update()
+		private Animation anim;
+		// Update is called once per frame
+        protected void Update()
         {
-            if (!isDead)
-            {
+            
 
-            }
-
-            if (building)
+            if (this.gameObject.activeInHierarchy && building)
                 Build();
 
         }
         void Awake()
         {
             startHealth = health;
+			buildTime = currentBuildTime;
             isDead = false;
             building = true;
             isActive = true;
+
+
+			DisplayUI ();
+
+			if (this.transform.GetChild (0).gameObject.GetComponent<Animation> () == null) {
+				//this.transform.GetChild (0).gameObject.AddComponent<Animator> ();
+				this.transform.GetChild (0).gameObject.AddComponent<Animation> ();
+			}
+			anim = this.transform.GetChild (0).gameObject.GetComponent<Animation> ();
+
+			//this.transform.GetChild (0).gameObject.AddComponent<AnimatorOverrideController> ();
+		
+			animClip.legacy = true;
+			anim.AddClip(animClip, "Building");
+
+
         }
 
-        public void TakeDamage(float damage)
-        {
+		public void TakeDamage(float damage)
+		{
             if (isDead)
                 return;
 
             health -= damage;
 
-			float percent = health / startHealth;
-
-			this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().fillAmount = health / startHealth;
-
-
-			if (percent < .2f)
-				this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.red;
-			else if (percent < .5f)
-				this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.yellow;
-
+			DisplayUI ();
 
             if (health <= 0)
             {
@@ -80,20 +81,68 @@ namespace MisfitMakers
         public void ResetStructure()
         {
             isDead = false;
-            health = startHealth;
-			this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.green;
+			building = true;
+			isActive = true;
+
+			health = startHealth;
+			currentBuildTime = buildTime;
+
+			DisplayUI ();
 
         }
 
         public void Build()
         {
-            buildTime -= Time.deltaTime;
+			anim ["Building"].wrapMode = WrapMode.Once;
+			anim.Play("Building");
 
-            if (buildTime <= 0)
-            {
+			currentBuildTime -= Time.deltaTime;
+
+			DisplayUI ();
+
+			if (currentBuildTime <= 0)
+			{
+				anim["Building"].speed = 2f;
+				//anim.Play
+			//	anim.Stop();
                 building = false;
+				this.transform.GetChild (3).GetChild (1).gameObject.SetActive (false);
+
             }
         }
+
+		public void DisplayUI(){
+
+			if (isDead)
+				return;
+
+			if (building) {
+				//anim.clip = anim.GetClip ("Building");
+
+				this.transform.GetChild (3).GetChild (1).gameObject.SetActive (true);
+				this.transform.GetChild (3).GetChild (0).gameObject.SetActive (false);
+
+				this.transform.GetChild (3).GetChild (1).GetComponent<Image> ().fillAmount = 1 - (float)currentBuildTime / buildTime;
+		
+			} else {
+
+				this.transform.GetChild (3).GetChild (0).gameObject.SetActive (true);
+				this.transform.GetChild (3).GetChild (1).gameObject.SetActive (false);
+
+				this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().fillAmount = health / startHealth;
+				
+				float percent = health / startHealth;
+				
+				if (percent < .2f)
+					this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.red;
+				else if (percent < .5f)
+					this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.yellow;
+				else
+					this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.green;
+			}
+
+
+		}
 
 
     }

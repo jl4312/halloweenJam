@@ -6,9 +6,7 @@ namespace MisfitMakers
 {
     public class StructureHouse : StructureBase
     {
-        public StructureHouse(float health, float buildTime, float cost) : base(health, buildTime, cost)
-        {
-        }
+
 
 		// Use this for initialization
         void Start()

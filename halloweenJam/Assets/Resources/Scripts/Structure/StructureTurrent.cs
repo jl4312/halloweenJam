@@ -16,11 +16,7 @@ namespace MisfitMakers
 		public GameObject projectilePool;
 		private ProjectileBase[] projectileList;
 
-        public StructureTurrent(float health, float buildTime, float cost) : base(health, buildTime, cost)
-        {
-            
-        }
-
+    
         // Use this for initialization
         void Start()
         {
@@ -40,8 +36,12 @@ namespace MisfitMakers
 				if(arrayList.Count == 0)
 					return;
 
-				Attack();
-            }
+				if(!building)
+					Attack();
+				base.Update();
+			}
+
+
         }
 
         
