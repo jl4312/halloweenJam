@@ -10,6 +10,7 @@ namespace MisfitMakers
 		private bool explosion = false;
 		public float explosionTime = .5f;
 		public float explosionRadius = 1.10f;
+
 		void Update()
 		{
 			//mid air
@@ -37,7 +38,7 @@ namespace MisfitMakers
 
 			rigid.useGravity = true; 
 			Vector3 projectileXZPos = new Vector3 (transform.position.x, 0, transform.position.z);
-			Vector3 tmp = targetTransform.position + targetTransform.forward * 3f;
+			Vector3 tmp = targetTransform.position + targetTransform.GetComponent<Rigidbody>().velocity;
 			Vector3 targetXZPos = new Vector3 (tmp.x, 0, tmp.z);
 
 			transform.LookAt (targetXZPos);
