@@ -119,6 +119,9 @@ MonoBehaviour:
   damage: 1
   atkSpeed: 2
   isDead: 0
+  hasReachedTarget: 0
+  newTarget: 1
+  closestTarget: {fileID: 0}
 --- !u!135 &135586028949073978
 SphereCollider:
   m_ObjectHideFlags: 1

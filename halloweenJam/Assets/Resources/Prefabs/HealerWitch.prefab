@@ -70,7 +70,6 @@ GameObject:
   - component: {fileID: 4612953246788806}
   - component: {fileID: 33935214130963326}
   - component: {fileID: 23126779705133578}
-  - component: {fileID: 135661738864345892}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -103,7 +102,6 @@ GameObject:
   - component: {fileID: 4491168833341060}
   - component: {fileID: 33391034040952768}
   - component: {fileID: 23880011678931434}
-  - component: {fileID: 65635154596157496}
   m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
@@ -170,7 +168,6 @@ GameObject:
   - component: {fileID: 4983333709362234}
   - component: {fileID: 33578837556409000}
   - component: {fileID: 23588560127640808}
-  - component: {fileID: 136265736934153196}
   m_Layer: 0
   m_Name: MainBody
   m_TagString: Untagged
@@ -206,6 +203,7 @@ GameObject:
   - component: {fileID: 4786993287527210}
   - component: {fileID: 54174551685995474}
   - component: {fileID: 65465544419690540}
+  - component: {fileID: 65377900025734870}
   - component: {fileID: 114894953120256332}
   m_Layer: 0
   m_Name: HealerWitch
@@ -241,7 +239,6 @@ GameObject:
   - component: {fileID: 4654721761545242}
   - component: {fileID: 33395421572886294}
   - component: {fileID: 23521158972405370}
-  - component: {fileID: 65526907942957410}
   m_Layer: 0
   m_Name: Wand
   m_TagString: Untagged
@@ -473,7 +470,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1428306363510456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.055664062, y: 0.037112474, z: 3.64}
+  m_LocalPosition: {x: -0.055664062, y: 0.037112474, z: -6.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4217980255260110}
@@ -998,6 +995,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &65377900025734870
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428306363510456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.33, y: 1.9, z: 0.76}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!65 &65465544419690540
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1010,30 +1019,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.33, y: 2.33, z: 0.76}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!65 &65526907942957410
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1871015315545016}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65635154596157496
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1167561096850970}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114894953120256332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1081,29 +1066,4 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 4.3
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135661738864345892
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1151499308219230}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136265736934153196
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1311137054983746}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

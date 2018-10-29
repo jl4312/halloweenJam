@@ -19,8 +19,11 @@ namespace MisfitMakers
         public GameObject torrentBulletPool;
 		public GameObject torrentArcPool;
 
+        List<Vector2> expose;
+
 		Camera cam;
         StructureBase structureToPlace;
+        GroundManager groundManager;
         GameObject enemySpawnPoints;
         GameObject ground;
         Vector3 distToGround;
@@ -42,12 +45,25 @@ namespace MisfitMakers
             cam = mainCam.GetComponent<Camera>();
             enemySpawnPoints = GameObject.FindGameObjectWithTag("SpawnPoints");
             ground = GameObject.FindGameObjectWithTag("Ground");
+            groundManager = ground.GetComponent<GroundManager>();
 
             distToGround = ground.transform.position - mainCam.transform.position;
             distToGroundMag = distToGround.magnitude;
             numOfSpawns = enemySpawnPoints.transform.childCount;
 
 			moneyText.text = "" + currentMoney;
+
+            expose = new List<Vector2>();
+
+            expose.Add(new Vector2(-1, 1));
+            expose.Add(new Vector2(0, 1));
+            expose.Add(new Vector2(1, 1));
+            expose.Add(new Vector2(-1, 0));
+            expose.Add(new Vector2(1, 0));
+            expose.Add(new Vector2(-1, -1));
+            expose.Add(new Vector2(0, -1));
+            expose.Add(new Vector2(1, -1));
+
         }
         void OnGUI()
         {
@@ -68,6 +84,9 @@ namespace MisfitMakers
             if (structureToPlace != null)
             {
                 bool hitGround = false;
+                bool hasHitATile = false;
+
+                TileScript tile = new TileScript();
 
                 Vector3 correctDir = mousePosWorld - mainCam.transform.position;
 
@@ -91,6 +110,17 @@ namespace MisfitMakers
                         hitGround = false;
                         continue;
                     }
+                    else if (hit[i].transform.CompareTag("Tile") && !hasHitATile)
+                    {
+                        hasHitATile = true;
+                        tile =  hit[i].transform.GetComponent<TileScript>();
+                        groundManager.ExposeTileArea(tile);
+
+                        //if (!hitGround)
+                        //{
+                        //    tile.spaceInUse = true;
+                        //} 
+                    }
                 }
 	
                 if (hitGround)
@@ -104,44 +134,69 @@ namespace MisfitMakers
 
                 if (Input.GetMouseButtonDown(0) && hitGround)
                 {
-
-                    PlaceStructure();
+                    if (hasHitATile && !tile.spaceInUse)
+                    {
+                        PlaceStructure(tile);
+                    }                   
                 }
             }
            
         }
-        void PlaceStructure()
+        void PlaceStructure(TileScript tile)
         {
-            structureToPlace.isActive = true;
+			if (currentMoney >= structureToPlace.cost)
+            {
+                structureToPlace.isActive = true;
 
-			if (currentMoney >= structureToPlace.cost) {
-				currentMoney -= structureToPlace.cost;
+                currentMoney -= structureToPlace.cost;
 				moneyText.text = "" +  currentMoney;
 
 				structureToPlace.ResetStructure();
 				structureToPlace.Build();
 				
 				structureToPlace = null;
-			}
+
+                groundManager.SetTileSpace(tile);
+                groundManager.TurnOffTiles();
+            }
 			else
 				Debug.Log ("Not Enough Money" + currentMoney + "/" + structureToPlace.cost);
         }
 
-        public void LoadTorrentProjectileStructure(GameObject pool)
+        public void LoadTorrentBulletStructure()
         {
-            for (int i = 0; i < pool.transform.childCount; i++)
+            GameObject child = GetInactiveChild(torrentBulletPool);
+            if (child != null)
             {
-				if (!pool.transform.GetChild(i).gameObject.activeInHierarchy)
+                structureToPlace = child.GetComponent<StructureBase>();
+                structureToPlace.isActive = false;
+            }
+            groundManager.TurnOnTiles(expose);
+        }
+        public void LoadTorrentArcStructure()
+        {
+            GameObject child = GetInactiveChild(torrentArcPool);
+            if (child != null)
+            {
+                structureToPlace = child.GetComponent<StructureBase>();
+                structureToPlace.isActive = false;
+            }
+
+            groundManager.TurnOnTiles(expose);
+        }
+        GameObject GetInactiveChild(GameObject parent)
+        {
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                if (!parent.transform.GetChild(i).gameObject.activeInHierarchy)
                 {
-					pool.transform.GetChild(i).gameObject.SetActive(true);
-					structureToPlace = pool.transform.GetChild(i).GetComponent<StructureBase>();
-                    structureToPlace.isActive = false;
-                    return;
+                    parent.transform.GetChild(i).gameObject.SetActive(true);
+                    return parent.transform.GetChild(i).gameObject;
                 }
             }
 
-            Debug.Log("Got no structure");
-            structureToPlace = null;
+            Debug.Log("Got no children");
+            return null;
         }
 
 

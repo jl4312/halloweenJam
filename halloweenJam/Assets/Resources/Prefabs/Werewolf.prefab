@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 4347315519463206}
   - component: {fileID: 54045473068779718}
   - component: {fileID: 135907635703989120}
+  - component: {fileID: 65245476603633028}
   - component: {fileID: 114977268134677736}
   m_Layer: 0
   m_Name: Werewolf
@@ -169,7 +170,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1978998006260910}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.53499985, y: -0.100000024, z: 0.39}
+  m_LocalPosition: {x: -0.53499985, y: -0.100000024, z: 1.46}
   m_LocalScale: {x: 1.2506, y: 1.2506, z: 1.2506}
   m_Children:
   - {fileID: 4880195672197802}
@@ -497,6 +498,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65245476603633028
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1978998006260910}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.16, z: 0.66}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!65 &65405750847688804
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -538,6 +551,9 @@ MonoBehaviour:
   damage: 1
   atkSpeed: 2
   isDead: 0
+  hasReachedTarget: 0
+  newTarget: 1
+  closestTarget: {fileID: 0}
   furyAttackSpeed: 0.2
   furyAttackHits: 3
 --- !u!135 &135615003259674402
