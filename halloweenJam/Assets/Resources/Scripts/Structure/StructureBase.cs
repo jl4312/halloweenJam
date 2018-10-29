@@ -16,7 +16,7 @@ namespace MisfitMakers
 
 		[Header("Structure Status Setting")]
         public bool isDead;
-        public bool building = true;
+        public bool building;
         [HideInInspector]
         public bool isActive;
 
@@ -26,13 +26,18 @@ namespace MisfitMakers
         float startHealth;//total health
 		float buildTime;//total buildTime
        
-		public AnimationClip animClip;
 
+		public bool boundaryActive;
+		//represents the border around structure that players cant place objects
+		public List<Vector2> borderList = new List<Vector2> ();
+
+
+		public AnimationClip animClip;
+		
 		private Animation anim;
 		// Update is called once per frame
         protected void Update()
-        {
-            
+        {  
 
             if (this.gameObject.activeInHierarchy && building)
                 Build();
@@ -43,11 +48,11 @@ namespace MisfitMakers
             startHealth = health;
 			buildTime = currentBuildTime;
             isDead = false;
-            building = true;
+            
             isActive = true;
 
 
-			DisplayUI ();
+
 
 			if (this.transform.GetChild (0).gameObject.GetComponent<Animation> () == null) {
 				//this.transform.GetChild (0).gameObject.AddComponent<Animator> ();
@@ -60,9 +65,20 @@ namespace MisfitMakers
 			animClip.legacy = true;
 			anim.AddClip(animClip, "Building");
 
+			DisplayUI ();
 
-        }
-
+			if (boundaryActive) {
+				borderList.Add(new Vector2(-1, 1));
+				borderList.Add(new Vector2(0, 1));
+				borderList.Add(new Vector2(1, 1));
+				borderList.Add(new Vector2(-1, 0));
+				borderList.Add(new Vector2(1, 0));
+				borderList.Add(new Vector2(-1, -1));
+				borderList.Add(new Vector2(0, -1));
+				borderList.Add(new Vector2(1, -1));
+			}
+		}
+		
 		public void TakeDamage(float damage)
 		{
             if (isDead)
@@ -102,7 +118,7 @@ namespace MisfitMakers
 
 			if (currentBuildTime <= 0)
 			{
-				anim["Building"].speed = 2f;
+				anim["Building"].speed = 1.5f;
 				//anim.Play
 			//	anim.Stop();
                 building = false;
