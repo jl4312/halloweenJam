@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace MisfitMakers
@@ -58,6 +59,18 @@ namespace MisfitMakers
                 return;
 
             health -= damage;
+
+			float percent = health / startHealth;
+
+			this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().fillAmount = health / startHealth;
+
+
+			if (percent < .2f)
+				this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.red;
+			else if (percent < .5f)
+				this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.yellow;
+
+
             if (health <= 0)
             {
                 isDead = true;
@@ -68,6 +81,8 @@ namespace MisfitMakers
         {
             isDead = false;
             health = startHealth;
+			this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.green;
+
         }
 
         public void Build()
