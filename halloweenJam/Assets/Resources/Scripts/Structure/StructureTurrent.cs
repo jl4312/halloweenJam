@@ -92,8 +92,8 @@ namespace MisfitMakers
 				ProjectileBase currentProjectile = Reload();
 
 				if(currentProjectile){
-					currentProjectile.Reset(this.transform.GetChild(0).GetChild(0).position,
-				                        this.transform.GetChild(0).GetChild(0).rotation);
+					currentProjectile.Reset(this.transform.GetChild(1).position,
+				                        this.transform.GetChild(1).rotation);
 
 					currentProjectile.SetNewTarget (closestEnemy);
 					currentProjectile.Launch();

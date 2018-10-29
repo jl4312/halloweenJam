@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33212426305753702}
   - component: {fileID: 23301900666917654}
   - component: {fileID: 135052794232580872}
+  - component: {fileID: 114749383465478122}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -126,7 +127,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8c059e4f754671b4db8ba41094d87d6c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,6 +176,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &114749383465478122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1564335726154620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc967436bc046e040a7cbc70cd18f390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  gameObjectList: []
+  tagName: Enemy
 --- !u!114 &114916010346172552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,9 +204,13 @@ MonoBehaviour:
   targetTransform: {fileID: 0}
   damage: 1
   despawnTime: 5
+  accurancy: 1
+  accurancyRadius: 0
   debug: 0
   distance: 0
   angle: 51.5
+  explosionTime: 0.5
+  explosionRadius: 0.25
 --- !u!135 &135052794232580872
 SphereCollider:
   m_ObjectHideFlags: 1
