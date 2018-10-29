@@ -544,6 +544,8 @@ MonoBehaviour:
   building: 0
   isActive: 1
   arrayList: []
+  boundaryActive: 1
+  borderList: []
   animClip: {fileID: 7400000, guid: 73410ae093745fe45a817c9d1f22c47e, type: 2}
   coolDown: 3
   projectilePool: {fileID: 0}

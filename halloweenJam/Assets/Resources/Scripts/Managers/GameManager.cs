@@ -19,8 +19,6 @@ namespace MisfitMakers
         public GameObject torrentBulletPool;
 		public GameObject torrentArcPool;
 
-        List<Vector2> expose;
-
 		Camera cam;
         StructureBase structureToPlace;
         GroundManager groundManager;
@@ -52,17 +50,6 @@ namespace MisfitMakers
             numOfSpawns = enemySpawnPoints.transform.childCount;
 
 			moneyText.text = "" + currentMoney;
-
-            expose = new List<Vector2>();
-
-            expose.Add(new Vector2(-1, 1));
-            expose.Add(new Vector2(0, 1));
-            expose.Add(new Vector2(1, 1));
-            expose.Add(new Vector2(-1, 0));
-            expose.Add(new Vector2(1, 0));
-            expose.Add(new Vector2(-1, -1));
-            expose.Add(new Vector2(0, -1));
-            expose.Add(new Vector2(1, -1));
 
         }
         void OnGUI()
@@ -170,8 +157,9 @@ namespace MisfitMakers
             {
                 structureToPlace = child.GetComponent<StructureBase>();
                 structureToPlace.isActive = false;
+                groundManager.TurnOnTiles(structureToPlace.borderList);
             }
-            groundManager.TurnOnTiles(expose);
+            
         }
         public void LoadTorrentArcStructure()
         {
@@ -180,9 +168,10 @@ namespace MisfitMakers
             {
                 structureToPlace = child.GetComponent<StructureBase>();
                 structureToPlace.isActive = false;
+                groundManager.TurnOnTiles(structureToPlace.borderList);
             }
 
-            groundManager.TurnOnTiles(expose);
+           
         }
         GameObject GetInactiveChild(GameObject parent)
         {
