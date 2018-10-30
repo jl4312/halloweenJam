@@ -5,12 +5,17 @@ using UnityEngine;
 
 namespace MisfitMakers
 {
+
     public class StructureBase : MonoBehaviour
     {
 
+
         [Header("Structure Base Setting")]
-        public float health;
-        public float currentBuildTime;
+		public float startHealth;//total health
+		public float buildTime;//total buildTime
+			
+		public float health;
+		public float currentBuildTime;
         public float cost;
 		[HideInInspector]
 
@@ -23,45 +28,47 @@ namespace MisfitMakers
 		public List<GameObject> arrayList;
         [HideInInspector]
 
-        float startHealth;//total health
-		float buildTime;//total buildTime
-       
+     
 
 		public bool boundaryActive;
 		//represents the border around structure that players cant place objects
 		public List<Vector2> borderList = new List<Vector2> ();
 
-
+		private GameObject statsUIPrefab;
+		public GameObject statsUI;
+		private float offset = 2.5f;
 		public AnimationClip animClip;
 		
 		private Animation anim;
 		// Update is called once per frame
-        protected void Update()
+        protected void FixedUpdate()
         {  
-
-            if (this.gameObject.activeInHierarchy && building)
+            if (building)
                 Build();
-
         }
-        void Awake()
+        protected virtual void Awake()
         {
-            startHealth = health;
-			buildTime = currentBuildTime;
+			if (!statsUI) {
+				statsUIPrefab = Resources.Load<GameObject> ("Prefabs/UI/EnityStatsUI");
+				statsUI = (GameObject)Instantiate(statsUIPrefab,this.transform, true);
+
+				Vector3 tmp = this.transform.GetChild(0).position;
+				tmp.y = transform.GetChild (0).GetChild(0).GetComponent<MeshRenderer> ().bounds.max.y + offset;
+				statsUI.transform.position = tmp;
+
+			}
+
+			health = startHealth;
+			currentBuildTime = buildTime;
             isDead = false;
             
             isActive = true;
 
-
-
-
 			if (this.transform.GetChild (0).gameObject.GetComponent<Animation> () == null) {
-				//this.transform.GetChild (0).gameObject.AddComponent<Animator> ();
 				this.transform.GetChild (0).gameObject.AddComponent<Animation> ();
 			}
 			anim = this.transform.GetChild (0).gameObject.GetComponent<Animation> ();
 
-			//this.transform.GetChild (0).gameObject.AddComponent<AnimatorOverrideController> ();
-		
 			animClip.legacy = true;
 			anim.AddClip(animClip, "Building");
 
@@ -109,22 +116,16 @@ namespace MisfitMakers
 
         public void Build()
         {
+			currentBuildTime -= Time.deltaTime;
 			anim ["Building"].wrapMode = WrapMode.Once;
 			anim.Play("Building");
 
-			currentBuildTime -= Time.deltaTime;
-
-			DisplayUI ();
-
 			if (currentBuildTime <= 0)
 			{
+				building = false;
 				anim["Building"].speed = 1.5f;
-				//anim.Play
-			//	anim.Stop();
-                building = false;
-				this.transform.GetChild (3).GetChild (1).gameObject.SetActive (false);
-
             }
+			DisplayUI ();
         }
 
 		public void DisplayUI(){
@@ -135,26 +136,26 @@ namespace MisfitMakers
 			if (building) {
 				//anim.clip = anim.GetClip ("Building");
 
-				this.transform.GetChild (3).GetChild (1).gameObject.SetActive (true);
-				this.transform.GetChild (3).GetChild (0).gameObject.SetActive (false);
+				statsUI.transform.GetChild (1).gameObject.SetActive (true);
+				statsUI.transform.GetChild (0).gameObject.SetActive (false);
 
-				this.transform.GetChild (3).GetChild (1).GetComponent<Image> ().fillAmount = 1 - (float)currentBuildTime / buildTime;
+				statsUI.transform.GetChild (1).GetComponent<Image> ().fillAmount = 1 - (float)currentBuildTime / buildTime;
 		
 			} else {
 
-				this.transform.GetChild (3).GetChild (0).gameObject.SetActive (true);
-				this.transform.GetChild (3).GetChild (1).gameObject.SetActive (false);
+				statsUI.transform.GetChild (0).gameObject.SetActive (true);
+				statsUI.transform.GetChild (1).gameObject.SetActive (false);
 
-				this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().fillAmount = health / startHealth;
+				statsUI.transform.GetChild (0).GetComponent<Image> ().fillAmount = health / startHealth;
 				
 				float percent = health / startHealth;
 				
 				if (percent < .2f)
-					this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.red;
+					statsUI.transform.GetChild (0).GetComponent<Image> ().color = Color.red;
 				else if (percent < .5f)
-					this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.yellow;
+					statsUI.transform.GetChild (0).GetComponent<Image> ().color = Color.yellow;
 				else
-					this.transform.GetChild (3).GetChild (0).GetComponent<Image> ().color = Color.green;
+					statsUI.transform.GetChild (0).GetComponent<Image> ().color = Color.green;
 			}
 
 

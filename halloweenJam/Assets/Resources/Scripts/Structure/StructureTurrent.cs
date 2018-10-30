@@ -26,7 +26,7 @@ namespace MisfitMakers
 		}
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             if (!isDead)
             {
@@ -38,7 +38,7 @@ namespace MisfitMakers
 
 				if(!building)
 					Attack();
-				base.Update();
+				base.FixedUpdate();
 			}
 
 

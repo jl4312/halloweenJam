@@ -28,10 +28,11 @@ namespace MisfitMakers
 
         float groundLevel = -1;
 
+		private GameObject statsUI;
         // Use this for initialization
-        void Start()
+        void Awake()
         {
-
+			//statsUI = 
         }
         void Update()
         {

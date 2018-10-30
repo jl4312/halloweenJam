@@ -68,6 +68,7 @@ namespace MisfitMakers
         // Update is called once per frame
         void Update()
         {
+			CameraPan();
             if (structureToPlace != null)
             {
                 bool hitGround = false;
@@ -198,5 +199,33 @@ namespace MisfitMakers
 
             ene.SetActive(true);
         }
+
+		//Debug Camera Panning
+		void CameraPan(){
+
+			float offset = .2f;
+			Vector3 translation = cam.transform.position ;
+			if (Input.GetKey (KeyCode.W))
+				translation.y += offset;
+			if(Input.GetKey(KeyCode.S))
+			   translation.y -= offset;
+			if (Input.GetKey (KeyCode.A)) {
+				translation.x += offset / 2;
+				translation.z -= offset / 2;
+			}
+			if (Input.GetKey (KeyCode.D)) {
+				translation.x -= offset / 2;
+				translation.z += offset / 2;
+			}
+
+			if (Input.GetKey (KeyCode.E) || Input.GetAxis("Mouse ScrollWheel") > 0f) {
+				cam.orthographicSize -= offset;
+			}
+			if (Input.GetKey (KeyCode.Q) || Input.GetAxis("Mouse ScrollWheel") < 0f) {
+				cam.orthographicSize += offset;
+			}
+			cam.transform.position = translation;
+	
+		}
     }
 }
