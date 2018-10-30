@@ -24,9 +24,8 @@ namespace MisfitMakers
 			projectileList = projectilePool.GetComponentsInChildren<ProjectileBase>(true);
 			canAttack = true;
 		}
-
         // Update is called once per frame
-        void FixedUpdate()
+        protected override void Update()
         {
             if (!isDead)
             {
@@ -38,10 +37,11 @@ namespace MisfitMakers
 
 				if(!building)
 					Attack();
-				base.FixedUpdate();
+
+
 			}
 
-
+			base.Update();
         }
 
         

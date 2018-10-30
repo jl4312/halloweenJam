@@ -41,39 +41,33 @@ namespace MisfitMakers
 		
 		private Animation anim;
 		// Update is called once per frame
-        protected void FixedUpdate()
-        {  
-            if (building)
-                Build();
-        }
-        protected virtual void Awake()
-        {
+		protected virtual void Awake()
+		{
 			if (!statsUI) {
 				statsUIPrefab = Resources.Load<GameObject> ("Prefabs/UI/EnityStatsUI");
 				statsUI = (GameObject)Instantiate(statsUIPrefab,this.transform, true);
-
+				
 				Vector3 tmp = this.transform.GetChild(0).position;
 				tmp.y = transform.GetChild (0).GetChild(0).GetComponent<MeshRenderer> ().bounds.max.y + offset;
 				statsUI.transform.position = tmp;
-
+				
 			}
-
+			
 			health = startHealth;
 			currentBuildTime = buildTime;
-            isDead = false;
-            
-            isActive = true;
-
+			isDead = false;
+			isActive = true;
+			
 			if (this.transform.GetChild (0).gameObject.GetComponent<Animation> () == null) {
 				this.transform.GetChild (0).gameObject.AddComponent<Animation> ();
 			}
 			anim = this.transform.GetChild (0).gameObject.GetComponent<Animation> ();
-
+			
 			animClip.legacy = true;
 			anim.AddClip(animClip, "Building");
-
+			
 			DisplayUI ();
-
+			
 			if (boundaryActive) {
 				borderList.Add(new Vector2(-1, 1));
 				borderList.Add(new Vector2(0, 1));
@@ -86,33 +80,14 @@ namespace MisfitMakers
 			}
 		}
 		
-		public void TakeDamage(float damage)
-		{
-            if (isDead)
-                return;
+		protected virtual void Update()
+        {  
 
-            health -= damage;
-
-			DisplayUI ();
-
-            if (health <= 0)
-            {
-                isDead = true;
-                this.gameObject.SetActive(false);
-            }
+            if (building)
+                Build();
         }
-        public void ResetStructure()
-        {
-            isDead = false;
-			building = true;
-			isActive = true;
-
-			health = startHealth;
-			currentBuildTime = buildTime;
-
-			DisplayUI ();
-
-        }
+       
+		
 
         public void Build()
         {
@@ -128,11 +103,40 @@ namespace MisfitMakers
 			DisplayUI ();
         }
 
-		public void DisplayUI(){
-
+		public void TakeDamage(float damage)
+		{
 			if (isDead)
 				return;
+			
+			health -= damage;
+			
+			DisplayUI ();
+			
+			if (health <= 0)
+			{
+				isDead = true;
+				this.gameObject.SetActive(false);
+			}
+		}
+		public void ResetStructure()
+		{
+			isDead = false;
+			building = true;
+			isActive = true;
+			
+			health = startHealth;
+			currentBuildTime = buildTime;
+			
+			DisplayUI ();
+			
+		}
 
+
+		public void DisplayUI(){
+			
+			if (isDead)
+				return;
+			
 			if (building) {
 				//anim.clip = anim.GetClip ("Building");
 

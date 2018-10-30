@@ -28,11 +28,31 @@ namespace MisfitMakers
 
         float groundLevel = -1;
 
-		private GameObject statsUI;
+		private GameObject statsUIPrefab;
+		public GameObject statsUI;
+		private float offset = 2.5f;
+
         // Use this for initialization
         void Awake()
         {
-			//statsUI = 
+			if (!statsUI) {
+				statsUIPrefab = Resources.Load<GameObject> ("Prefabs/UI/EnityStatsUI");
+				statsUI = (GameObject)Instantiate(statsUIPrefab,this.transform, true);
+				
+
+			}
+			Vector3 tmp = this.transform.position;
+			
+			MeshRenderer[] list = this.transform.GetComponentsInChildren<MeshRenderer>();
+			
+			float highestPoint = 0;
+			for(int i =0; i < list.Length;i++)
+				if(highestPoint < list[i].bounds.max.y)
+					highestPoint = list[i].bounds.max.y;
+			
+			tmp.y = highestPoint + offset;
+			this.statsUI.transform.position = tmp;
+		
         }
         void Update()
         {
